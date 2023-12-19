@@ -1,0 +1,48 @@
+def create_range_string(nums):
+    if not nums:
+        return ""
+
+    result = []
+    start = end = nums[0]
+
+    for i in range(1, len(nums)):
+        if nums[i] == end + 1:
+            end = nums[i]
+        else:
+            if start == end:
+                result.append(str(start))
+            else:
+                result.append(f"{start}-{end}")
+            start = end = nums[i]
+
+    if start == end:
+        result.append(str(start))
+    else:
+        result.append(f"{start}-{end}")
+
+    return ",".join(result)
+
+# Пример использования
+nums = [0, 1, 2, 3, 4, 5, 6, 9, 11, 12]
+result_string = create_range_string(nums)
+print(result_string)
+
+//2
+
+class ElevatorSystem:
+    def __init__(self, num_floors, num_elevators):
+        self.num_floors = num_floors
+        self.num_elevators = num_elevators
+        self.elevator_positions = [0] * num_elevators
+
+    def request_elevator(self, requested_floor):
+        closest_elevator = min(range(self.num_elevators), key=lambda i: abs(self.elevator_positions[i] - requested_floor))
+        self.move_elevator(closest_elevator, requested_floor)
+        return f"Sending elevator {chr(ord('A') + closest_elevator)} to floor {requested_floor}"
+
+    def move_elevator(self, elevator_index, destination_floor):
+        self.elevator_positions[elevator_index] = destination_floor
+
+# Пример использования
+elevator_system = ElevatorSystem(num_floors=19, num_elevators=2)
+print(elevator_system.request_elevator(1))
